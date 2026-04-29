@@ -177,9 +177,9 @@ class ReportGenerator:
 class TelegramBot:
     def __init__(self, token, chat_id):
         self.token = token
-        self.chat_id = chat_id
-        # self.api_url = f"https://telegram.org{self.token}/sendMessage"
-        self.api_url = f"https://api.telegram.org/bot8708497760:AAHLZTNq7B0BJ8_9BCywAyxgqeZQhWQTwtw/sendMessage"
+        self.chat_id = chat_id        
+        self.api_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+        #self.api_url = f"https://api.telegram.org/bot8708497760:AAHLZTNq7B0BJ8_9BCywAyxgqeZQhWQTwtw/sendMessage"
 
     def send_message(self, text):
         try:
