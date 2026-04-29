@@ -321,11 +321,17 @@ if __name__ == "__main__":
 
     # 3. 수익률순으로 리포트 생성 및 출력
     if ticker_results:
-        report_text = ReportGenerator.generate_rank_report(
-            ticker_results, NAME_MAP, THEME_MAP, news)
-        print(report_text)
-
+        # --- [수정 포인트] 여러 명에게 전송 ---
+        for chat_id in TELEGRAM_CHAT_ID:
+            try:
+                # 각 ID별로 봇 객체를 생성하여 전송
+                bot = TelegramBot(TELEGRAM_TOKEN, chat_id)
+                bot.send_message(report_text)
+                print(f"✅ {chat_id} 전송 성공!")
+            except Exception as send_err:
+                print(f"❌ {chat_id} 전송 실패: {send_err}")
+        # ---------------------------------------
         # --- [추가] 메시지 전송 실행 ---
-        bot.send_message(report_text)
+        # bot.send_message(report_text)
     else:
         print("데이터를 가져오는 데 실패했습니다. 인터넷 연결을 확인해 주세요.")
