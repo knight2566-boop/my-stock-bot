@@ -155,7 +155,10 @@ class ReportGenerator:
 
         # (상세 리스트 출력 로직 동일...)
         for item in theme_summary:
-            avg_icon = "🔺" if item['avg'] > 0 else "🔻"
+            if item['avg'] > 0:
+                avg_icon = "🔴"  # 상승 테마 헤더
+            else:
+                avg_icon = "🔵"  # 하락 테마 헤더 (파란 원)
             msg += f"{avg_icon} *{item['theme']}* (평균 {item['avg']:+.2f}%)\n"
             msg += "```\n"
             for ticker, change in item['stocks']:
