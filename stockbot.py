@@ -326,14 +326,17 @@ if __name__ == "__main__":
         print(report_text)
 
         # --- [수정 포인트] 여러 명에게 전송 ---
-        for chat_id in TELEGRAM_CHAT_ID:
+        raw_ids = os.getenv("TELEGRAM_CHAT_ID", "")
+        chat_ids = [i.strip() for i in raw_ids.split(",") if i.strip()]
+
+        for cid in chat_ids:
             try:
-                # 각 ID별로 봇 객체를 생성하여 전송
-                bot = TelegramBot(TELEGRAM_TOKEN, chat_id)
-                bot.send_message(report_text)
-                print(f"✅ {chat_id} 전송 성공!")
-            except Exception as send_err:
-                print(f"❌ {chat_id} 전송 실패: {send_err}")
+                # 개별 아이디로 하나씩 전송
+                temp_bot = TelegramBot(TELEGRAM_TOKEN, cid)
+                temp_bot.send_message(report_text)
+                print(f"✅ {cid} 전송 성공")
+            except Exception as e:
+                print(f"❌ {cid} 전송 실패: {e}")
         # ---------------------------------------
         # --- [추가] 메시지 전송 실행 ---
         # bot.send_message(report_text)
